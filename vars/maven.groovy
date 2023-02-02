@@ -17,6 +17,7 @@ def call(COMPONENT)                                                           //
                     }
                 }
             }
+
             stage('Downloading the dependencies') {
                 steps {
                     sh "npm install"
