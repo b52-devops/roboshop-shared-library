@@ -8,7 +8,7 @@ def lintChecks(COMPONENT) {
 
 def sonarChecks(COMPONENT) {
         sh "echo Starting code quality analysis"
-        sh "sonar-scanner -Dsonar.host.url=http://172.31.15.252:9000 -Dsonar.sources=. -Dsonar.projectKey=catalogue -Dsonar.login=admin -Dsonar.password=password"
+        sh "sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.sources=. -Dsonar.projectKey=catalogue -Dsonar.login=${SONAR_USR} -Dsonar.password=${SONAR_PSW}"
 }
 
 
@@ -16,6 +16,10 @@ def call(COMPONENT)                                                           //
 {
     pipeline{
         agent any
+        environment {
+            SONAR = credentials('SONAR')
+            SONAR_URL = "172.31.15.252"
+        }
         stages{                                                     // Start of the stages
             stage('Lint Checks') {
                 steps {
