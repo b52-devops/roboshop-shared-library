@@ -9,6 +9,7 @@ def lintChecks(COMPONENT) {
 def sonarChecks(COMPONENT) {
         sh "echo Starting code quality analysis"
         sh "sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.sources=. -Dsonar.projectKey=${COMPONENT} -Dsonar.login=${SONAR_USR} -Dsonar.password=${SONAR_PSW}"
+        sh  "sonar-quality-gata.sh ${SONAR_USR} ${SONAR_PWD} ${SONAR_URL} ${COMPONENT}"
 }
 
 
@@ -45,3 +46,6 @@ def call(COMPONENT)                                                           //
         }                                                          // End of the stages
     }
 }
+
+// Jenkins WS should be operated with t3.medium for the jobs to be processed quickly
+// Outstanding for me as well
