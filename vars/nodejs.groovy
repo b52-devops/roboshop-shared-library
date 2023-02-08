@@ -56,7 +56,7 @@ def call(COMPONENT)                                                           //
                     }
             }
 
-            stage('Downloading the dependencies') {
+            stage('Preparing the Artifact') {
                 when {
                     expression { env.TAG_NAME != null }
                     }
