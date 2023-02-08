@@ -42,7 +42,6 @@ def call(COMPONENT)                                                           //
             }
 
             stage('Test Cases'){
-                steps{
                     parallel{
                         stage('Unit Tests'){
                             steps{
@@ -62,7 +61,6 @@ def call(COMPONENT)                                                           //
                             }
                         }
                     }
-                }
             }
 
             stage('Downloading the dependencies') {
