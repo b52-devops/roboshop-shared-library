@@ -33,7 +33,8 @@ def call(COMPONENT)                                                           //
             stage('Sonar Checks') {
                 steps {
                     script {
-                        sonarChecks(COMPONENT)                                // If the function is in the same file, no need to call the function with the fileName as prefix.
+                        env.ARGS=" -Dsonar.java.binaries=target/"
+                        common.sonarChecks(COMPONENT)                                // If the function is in the same file, no need to call the function with the fileName as prefix.
                     }
                 }
             }
