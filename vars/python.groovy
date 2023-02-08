@@ -1,8 +1,7 @@
 def lintChecks(COMPONENT) {
-        sh "echo Installing JSLINT"
-        sh "npm install jslint"
-        sh "ls -ltr node_modules/jslint/bin/"
-        // sh "./node_modules/jslint/bin/jslint.js server.js"
+        sh "echo Installing PYLINT"
+        // https://pylint.pycqa.org/en/2.7.1/user_guide/run.html
+        // sh pylint filename.py
         sh "echo lint checks completed for ${COMPONENT} .....!!!!!"
 }
 
@@ -75,8 +74,8 @@ def call(COMPONENT)                                                           //
                     expression { env.UPLOAD_STATUS == "" }
                     }
                 steps {
-                    sh "npm install"
-                    sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                    
+                    sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt"
                     sh "ls -ltr"
                 }
             }
