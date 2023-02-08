@@ -60,7 +60,7 @@ def call(COMPONENT)                                                           //
                 steps{
                     sh "echo checking whether artifact exists or not. If it does not exists, then only proceed with preparation and upload"
                     script{
-                        env.STATUS_CODE=sh(returnStdout: true, script: 'curl -L -s http://172.31.2.21:8081/service/rest/${COMPONENT}/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip')
+                        env.STATUS_CODE=sh(returnStdout: true, script: "curl -L -s http://172.31.2.21:8081/service/rest/${COMPONENT}/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip")
                         print STATUS_CODE
                     }
                 }
