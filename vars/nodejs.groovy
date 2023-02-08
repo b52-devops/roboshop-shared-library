@@ -57,18 +57,18 @@ def call(COMPONENT)                                                           //
             }
 
             stage('Artifact Validation On Nexus') {
-                steps{
-                    sh "echo checking whether artifact exists or not. If it does not exists, then only proceed with preparation and upload"
-                    script{
-                        env.STATUS_CODE=sh(returnStdout: true, script: "curl -L -s http://172.31.2.21:8081/service/rest/${COMPONENT}/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true")
-                        print STATUS_CODE
+                steps {
+                    sh "echo checking whether artifact exists of not. If it does not exist then only proceed with Preparation and Upload"
+                    script {
+                        env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl -L -s http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true" )
+                        print UPLOAD_STATUS
                     }
-                }
             }
 
             stage('Preparing the Artifact') {
                 when {
                     expression { env.TAG_NAME != null }
+                    // expression { env.UPLOAD_STATUS == "" }
                     }
                 steps {
                     sh "npm install"
@@ -80,6 +80,7 @@ def call(COMPONENT)                                                           //
             stage('Uploading the artifact'){
                 when {
                     expression { env.TAG_NAME != null }
+                    // expression { env.UPLOAD_STATUS == "" }
                     }
                 steps{
                     sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
