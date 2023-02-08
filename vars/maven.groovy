@@ -12,6 +12,7 @@ def call(COMPONENT)                                                           //
         environment {
             SONAR = credentials('SONAR')
             SONAR_URL = "172.31.15.252"
+            NEXUS_URL = "172.31.2.21"
         }
         stages{                                                     // Start of the stages
             stage('Lint Checks') {
