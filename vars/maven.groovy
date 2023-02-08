@@ -11,6 +11,7 @@ def call(COMPONENT)                                                           //
         agent any
         environment {
             SONAR = credentials('SONAR')
+            NEXUS = credentials('NEXUS')
             SONAR_URL = "172.31.15.252"
             NEXUS_URL = "172.31.2.21"
         }
