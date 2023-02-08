@@ -60,6 +60,8 @@ def call(COMPONENT)                                                           //
                     }
                 steps {
                     sh "npm install"
+                    sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                    sh "ls -ltr"
                 }
             }
 
