@@ -54,18 +54,21 @@ def call(COMPONENT)                                                           //
                     }
                 }
 
-            stage('Downloading the dependencies') {
+            stage('Preparing the artifact') {
                 when {
                     expression { env.TAG_NAME != null }
+                    expression { env.UPLOAD_STATUS == "" }
                     }
                 steps {
                     sh "mvn clean package"
+                    sh "ls -ltr"
                 }
             }
 
             stage('Uploading the artifact'){
                 when {
                     expression { env.TAG_NAME != null }
+                    expression { env.UPLOAD_STATUS == "" }
                     }
                 steps{
                     sh "echo uploading artifact to nexus"
