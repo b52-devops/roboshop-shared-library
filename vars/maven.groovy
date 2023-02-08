@@ -71,6 +71,29 @@ def call(COMPONENT)                                                           //
                     sh "echo uploading artifact to nexus"
                 }
             }
+
+            stage('Preparing the Artifact') {
+                when {
+                    expression { env.TAG_NAME != null }
+                    expression { env.UPLOAD_STATUS == "" }
+                    }
+                steps {
+                    sh "npm install"
+                    sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                    sh "ls -ltr"
+                }
+            }
+
+            stage('Uploading the artifact'){
+                when {
+                    expression { env.TAG_NAME != null }
+                    expression { env.UPLOAD_STATUS == "" }
+                    }
+                steps{
+                    sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                }
+            }
+
         }                                                          // End of the stages
     }
 }
