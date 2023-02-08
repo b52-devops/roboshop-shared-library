@@ -56,7 +56,7 @@ def call(COMPONENT)                                                           //
                     }
             }
 
-            stage('Artifact Validationon Nexus') {
+            stage('Artifact Validation On Nexus') {
                 steps{
                     sh "checking whether artifact exists or not. If it doesn't exists, then only proceed with preparation and upload"
                     script{
