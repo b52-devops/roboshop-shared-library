@@ -12,7 +12,9 @@ def call(COMPONENT)                                                           //
         agent any
         environment {
             SONAR = credentials('SONAR')
+            NEXUS = credentials('NEXUS')
             SONAR_URL = "172.31.15.252"
+            NEXUS_URL = "172.31.2.21"
         }
         stages{                                                     // Start of the stages
             stage('Lint Checks') {
@@ -70,7 +72,7 @@ def call(COMPONENT)                                                           //
                     expression { env.TAG_NAME != null }
                     }
                 steps{
-                    sh "echo uploading artifact to nexus"
+                    sh "curl -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                 }
             }
 
