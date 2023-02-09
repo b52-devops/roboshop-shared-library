@@ -64,3 +64,23 @@ def testCases() {
                 }
         }
 }
+
+def testCases () {
+        parallel(
+                "UNIT": {
+                        stage('Unit Tests'){
+                                sh "echo Unit Testing ..........."
+                        }
+                },
+                "INTEGRATION": {
+                        stage('Integration Tests'){
+                                sh "echo Integration Testing ..........."
+                        }
+                },
+                "FUNCTIONAL": {
+                        stage('Functional Tests'){
+                                sh "echo Functional Testing ..........."
+                        }
+                },
+        )
+}
