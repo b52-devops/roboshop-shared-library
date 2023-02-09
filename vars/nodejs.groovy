@@ -13,7 +13,8 @@ def call() {
         env.APP = "nodejs"
         lintChecks()
         env.ARGS=" -Dsonar.sources=."
-        common.sonarChecks(COMPONENT)
+        common.sonarChecks()
+        common.testCases()
     }
 }
 

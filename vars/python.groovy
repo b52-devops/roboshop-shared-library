@@ -3,7 +3,8 @@ def call(COMPONENT) {
         env.APP = "python"
         lintChecks()
         env.ARGS="-Dsonar.sources=."
-        common.sonarChecks(COMPONENT)
+        common.sonarChecks()
+        common.testCases()
     }
 }
 

@@ -5,13 +5,14 @@ def lintChecks(COMPONENT) {
         sh "echo lint checks completed for ${COMPONENT} .....!!!!!"
 }
 
-def call(COMPONENT) {
+def call() {
     node {
         env.APP = "maven"
         lintChecks()
         sh "mvn clean compile"
         env.ARGS=" -Dsonar.java.binaries=target/"
-        common.sonarChecks(COMPONENT)
+        common.sonarChecks()
+        common.testCases()
     }
 }
 

@@ -1,4 +1,4 @@
-def sonarChecks(COMPONENT) {
+def sonarChecks() {
         stage ('Sonar Checks')
         {
                 sh "echo Starting code quality analysis"
@@ -38,5 +38,29 @@ def lintChecks() {
                 else
                         sh "echo performing generic lint cheks"
 
+        }
+}
+
+def testCases() {
+        stage('Test Cases'){
+                parallel{
+                        stage('Unit Tests'){
+                                steps{
+                                        sh "echo Unit Testing ..........."
+                                }
+                        }
+
+                        stage('Integration Tests'){
+                                steps{
+                                        sh "echo Integration Testing ..........."
+                                }
+                        }
+
+                        stage('Functional Tests'){
+                                steps{
+                                        sh "echo Functional Testing ..........."
+                                }
+                        }
+                }
         }
 }
