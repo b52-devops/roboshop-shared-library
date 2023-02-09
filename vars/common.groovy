@@ -66,6 +66,7 @@ def artifacts() {
                 sh "echo checking whether artifact exists of not. If it does not exist then only proceed with Preparation and Upload"
                 env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl -L -s http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true" )
         }
+
         if(env.UPLOAD_STATUS == "") {
                 stage ('Preparing the artifacts') {
                         if(env.APP == "maven") {
@@ -95,6 +96,11 @@ def artifacts() {
                                 sh '''
                                         echo "Golang is your task
                                 '''
+                        }
+                }
+                stage('Uploading artifacts') {
+                        withCredentials([usernamePassword(credentialsId: 'NEXUS', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {
+                                sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                         }
                 }
         }
