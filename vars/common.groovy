@@ -41,32 +41,8 @@ def lintChecks() {
         }
 }
 
-def testCases() {
-        stage('Test Cases'){
-                parallel{
-                        stage('Unit Tests'){
-                                steps{
-                                        sh "echo Unit Testing ..........."
-                                }
-                        }
-
-                        stage('Integration Tests'){
-                                steps{
-                                        sh "echo Integration Testing ..........."
-                                }
-                        }
-
-                        stage('Functional Tests'){
-                                steps{
-                                        sh "echo Functional Testing ..........."
-                                }
-                        }
-                }
-        }
-}
-
 def testCases () {
-        parallel(
+        parallel(                                       // This is how we write stages in parrelel
                 "UNIT": {
                         stage('Unit Tests'){
                                 sh "echo Unit Testing ..........."
@@ -83,4 +59,13 @@ def testCases () {
                         }
                 },
         )
+}
+
+def artifacts() {
+        stage('Artifact Validation On Nexus') {
+                sh "echo checking whether artifact exists of not. If it does not exist then only proceed with Preparation and Upload"
+                script {
+                        env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl -L -s http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true" )
+                }
+        }
 }
