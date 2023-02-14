@@ -10,3 +10,4 @@ def call() {
         common.artifacts()
     }
 }
+
