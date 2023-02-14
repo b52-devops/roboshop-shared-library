@@ -1,5 +1,6 @@
 def call(COMPONENT) {
     node {
+        git branch: 'main', url: "https://github.com/b52-devops/${COMPONENT}.git"
         env.APP = "python"
         lintChecks()
         env.ARGS="-Dsonar.sources=."

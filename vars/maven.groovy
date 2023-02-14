@@ -1,7 +1,9 @@
 def call() {
     node {
+        git branch: 'main', url: "https://github.com/b52-devops/${COMPONENT}.git"
         env.APP = "maven"
         common.lintChecks()
+        sh "ls -ltr"
         sh "mvn clean compile"
         env.ARGS=" -Dsonar.java.binaries=target/"
         common.sonarChecks()
