@@ -1,14 +1,7 @@
-def lintChecks(COMPONENT) {
-        sh "echo Installing mvn"
-        // sh "yum install maven -y"
-        // sh "mvn checkstyle:check"
-        sh "echo lint checks completed for ${COMPONENT} .....!!!!!"
-}
-
 def call() {
     node {
         env.APP = "maven"
-        lintChecks()
+        common.lintChecks()
         sh "mvn clean compile"
         env.ARGS=" -Dsonar.java.binaries=target/"
         common.sonarChecks()
@@ -16,7 +9,6 @@ def call() {
         common.artifacts()
     }
 }
-
 
 // def call(COMPONENT)                                                           // call is the default function that's called by default.
 // {
